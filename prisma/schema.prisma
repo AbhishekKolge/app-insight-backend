@@ -1,0 +1,98 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                     String    @id @default(uuid())
+  name                   String
+  email                  String    @unique
+  password               String
+  dob                    DateTime?
+  profileImage           String?
+  profileImageId         String?
+  authenticationPlatform Platform  @default(APP)
+  verificationCode       String?
+  isVerified             Boolean   @default(false)
+  verified               DateTime?
+  passwordCode           String?
+  passwordCodeExpiration DateTime?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  @@index([name, email])
+}
+
+model App {
+  id              String         @id @default(uuid())
+  name            String         @unique
+  rating          Float?
+  reviewCount     Int
+  size            Float?
+  installCount    Int
+  type            Type           @default(FREE)
+  price           Float
+  currency        CurrencyType   @default(DOLLAR)
+  updatedAt       DateTime
+  currentVersion  String?
+  androidVersion  String?
+  category        Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  categoryId      String?
+  contentRating   ContentRating? @relation(fields: [contentRatingId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  contentRatingId String?
+  genre           Genre?         @relation(fields: [genreId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  genreId         String?
+  reviews         Review[]
+}
+
+model Category {
+  id   String @id @default(uuid())
+  name String @unique
+  apps App[]
+}
+
+model ContentRating {
+  id   String @id @default(uuid())
+  name String @unique
+  apps App[]
+}
+
+model Genre {
+  id   String @id @default(uuid())
+  name String @unique
+  apps App[]
+}
+
+model Review {
+  id        String     @id @default(uuid())
+  comment   String?
+  app       App        @relation(fields: [appId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  appId     String
+  sentiment Sentiment?
+}
+
+enum Type {
+  FREE
+  PAID
+}
+
+enum CurrencyType {
+  INR
+  DOLLAR
+}
+
+enum Sentiment {
+  NEUTRAL
+  POSITIVE
+  NEGATIVE
+}
+
+enum Platform {
+  APP
+  GOOGLE
+}

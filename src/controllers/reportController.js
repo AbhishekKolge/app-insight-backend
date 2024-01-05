@@ -7,7 +7,57 @@ const customUtils = require('../utils');
 const retrieveSchema = require('../retrieveSchema');
 
 const getAllReports = async (req, res) => {
-  res.status(StatusCodes.OK).json({});
+  const {
+    page,
+    sortKey,
+    sortMethod,
+    search,
+    genreId,
+    contentRatingId,
+    categoryId,
+    type,
+    rating,
+    ratingOperator,
+    review,
+    reviewOperator,
+    size,
+    sizeOperator,
+    installCount,
+    installCountOperator,
+    price,
+    priceOperator,
+  } = req.query;
+
+  const queryBuilder = new customUtils.QueryBuilder({
+    model: prisma.app,
+    searchFields: ['name', 'currentVersion', 'androidVersion'],
+    sortKey,
+  });
+
+  const { results, totalCount, totalPages } = await queryBuilder
+    .filter({
+      search,
+      genreId,
+      contentRatingId,
+      categoryId,
+      rating,
+      type,
+      ratingOperator,
+      review,
+      reviewOperator,
+      size,
+      sizeOperator,
+      installCount,
+      installCountOperator,
+      price,
+      priceOperator,
+    })
+    .sort(sortMethod)
+    .paginate(page)
+    .selectWithIncludes(retrieveSchema.report)
+    .execute();
+
+  res.status(StatusCodes.OK).json({ results, totalCount, totalPages });
 };
 
 module.exports = {

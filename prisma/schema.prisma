@@ -48,6 +48,7 @@ model App {
   genre           Genre?         @relation(fields: [genreId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   genreId         String?
   reviews         Review[]
+  createdAt       DateTime       @default(now())
 }
 
 model Category {

@@ -15,6 +15,7 @@ const { removeQuotes } = require('./format');
 const { currentTime, checkTimeExpired, time } = require('./time');
 const { getUserAgent, getRequestIp, checkTestUser } = require('./requestInfo');
 const { checkPermissions } = require('./permissions.js');
+const { QueryBuilder } = require('./queryBuilder.js');
 
 module.exports = {
   createJWT,
@@ -36,4 +37,5 @@ module.exports = {
   checkTimeExpired,
   time,
   checkPermissions,
+  QueryBuilder,
 };

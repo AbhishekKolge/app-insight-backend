@@ -13,7 +13,7 @@ const getKiloBytes = (size) => {
     return +number ? +number : null;
   } else if (givenSize.includes('k')) {
     const number = givenSize.split('k')[0];
-    return +number ? +number : null;
+    return +number ? +number / 1000 : null;
   }
   return null;
 };

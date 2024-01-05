@@ -23,32 +23,17 @@ router.route('/show-me').get(authenticateUserMiddleware, showCurrentUser);
 router
   .route('/profile-image')
   .post(
-    [
-      authenticateUserMiddleware,
-      testUserMiddleware,
-      uploadProfileImageSchema,
-      validateRequest,
-    ],
+    [authenticateUserMiddleware, uploadProfileImageSchema, validateRequest],
     uploadProfileImage
   )
   .delete(
-    [
-      authenticateUserMiddleware,
-      testUserMiddleware,
-      removeProfileImageSchema,
-      validateRequest,
-    ],
+    [authenticateUserMiddleware, removeProfileImageSchema, validateRequest],
     removeProfileImage
   );
 router
   .route('/')
   .patch(
-    [
-      authenticateUserMiddleware,
-      testUserMiddleware,
-      updateUserSchema,
-      validateRequest,
-    ],
+    [authenticateUserMiddleware, updateUserSchema, validateRequest],
     updateUser
   )
   .delete(

@@ -2,7 +2,7 @@ const DEFAULT_PAGE_SIZE = 10;
 const DEFAULT_PAGE = 1;
 
 class QueryBuilder {
-  constructor({ model, searchFields, sortKey }) {
+  constructor({ model, searchFields, sortKey, nullishSort }) {
     this.model = model;
     this.query = {
       where: {},
@@ -10,6 +10,7 @@ class QueryBuilder {
     this.pagination = {};
     this.searchFields = searchFields || [];
     this.sortKey = sortKey || '';
+    this.nullishSort = nullishSort === 'true' ? true : false;
     this.selectFields = [];
     this.includeRelations = [];
     this.selectIncludes = {};
@@ -93,12 +94,36 @@ class QueryBuilder {
 
   sort(sortOption) {
     const sortOptions = {
-      latest: { [this.sortKey]: { sort: 'desc', nulls: 'last' } },
-      oldest: { [this.sortKey]: { sort: 'asc', nulls: 'last' } },
-      highest: { [this.sortKey]: { sort: 'desc', nulls: 'last' } },
-      lowest: { [this.sortKey]: { sort: 'asc', nulls: 'last' } },
-      aToZ: { [this.sortKey]: { sort: 'asc', nulls: 'last' } },
-      zToA: { [this.sortKey]: { sort: 'desc', nulls: 'last' } },
+      latest: {
+        [this.sortKey]: this.nullishSort
+          ? { sort: 'desc', nulls: 'last' }
+          : 'desc',
+      },
+      oldest: {
+        [this.sortKey]: this.nullishSort
+          ? { sort: 'asc', nulls: 'last' }
+          : 'asc',
+      },
+      highest: {
+        [this.sortKey]: this.nullishSort
+          ? { sort: 'desc', nulls: 'last' }
+          : 'desc',
+      },
+      lowest: {
+        [this.sortKey]: this.nullishSort
+          ? { sort: 'asc', nulls: 'last' }
+          : 'asc',
+      },
+      aToZ: {
+        [this.sortKey]: this.nullishSort
+          ? { sort: 'asc', nulls: 'last' }
+          : 'asc',
+      },
+      zToA: {
+        [this.sortKey]: this.nullishSort
+          ? { sort: 'desc', nulls: 'last' }
+          : 'desc',
+      },
     };
 
     this.query.orderBy = sortOptions[sortOption] || { createdAt: 'desc' };

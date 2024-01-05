@@ -11,6 +11,7 @@ const getAllReports = async (req, res) => {
     page,
     sortKey,
     sortMethod,
+    nullishSort,
     search,
     genreId,
     contentRatingId,
@@ -32,6 +33,7 @@ const getAllReports = async (req, res) => {
     model: prisma.app,
     searchFields: ['name', 'currentVersion', 'androidVersion'],
     sortKey,
+    nullishSort,
   });
 
   const { results, totalCount, totalPages } = await queryBuilder
@@ -40,8 +42,8 @@ const getAllReports = async (req, res) => {
       genreId,
       contentRatingId,
       categoryId,
-      rating,
       type,
+      rating,
       ratingOperator,
       review,
       reviewOperator,

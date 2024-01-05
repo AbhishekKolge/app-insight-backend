@@ -92,6 +92,24 @@ class QueryBuilder {
     return this;
   }
 
+  filterIn(filterObject) {
+    for (const key in filterObject) {
+      if (Object.hasOwnProperty.call(filterObject, key)) {
+        if (filterObject[key]) {
+          this.query.where = {
+            ...this.query.where,
+            [key]: {
+              in: filterObject[key].split(','),
+            },
+          };
+        }
+        delete filterObject[key];
+      }
+    }
+
+    return this;
+  }
+
   sort(sortOption) {
     const sortOptions = {
       latest: {

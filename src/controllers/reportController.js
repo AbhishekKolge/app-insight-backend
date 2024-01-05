@@ -39,9 +39,6 @@ const getAllReports = async (req, res) => {
   const { results, totalCount, totalPages } = await queryBuilder
     .filter({
       search,
-      genreId,
-      contentRatingId,
-      categoryId,
       type,
       rating,
       ratingOperator,
@@ -54,6 +51,7 @@ const getAllReports = async (req, res) => {
       price,
       priceOperator,
     })
+    .filterIn({ genreId, contentRatingId, categoryId })
     .sort(sortMethod)
     .paginate(page)
     .selectWithIncludes(retrieveSchema.report)

@@ -42,7 +42,61 @@ const report = {
   },
 };
 
+const topAppsByCategory = {
+  id: true,
+  name: true,
+  installCount: true,
+  category: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+};
+
+const topAppsByRating = {
+  id: true,
+  name: true,
+  installCount: true,
+  rating: true,
+  category: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+};
+
+const topExpensiveApps = {
+  id: true,
+  name: true,
+  price: true,
+  category: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+};
+
+const topReviewedApps = {
+  id: true,
+  name: true,
+  reviewCount: true,
+};
+
+const topCommentedApps = {
+  id: true,
+  name: true,
+  reviews: true,
+};
+
 module.exports = {
   user,
   report,
+  topAppsByCategory,
+  topAppsByRating,
+  topExpensiveApps,
+  topReviewedApps,
+  topCommentedApps,
 };

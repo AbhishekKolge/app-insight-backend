@@ -5,7 +5,6 @@ const fs = require('fs').promises;
 const prisma = require('../../prisma/prisma-client');
 
 const CustomError = require('../errors');
-const customUtils = require('../utils');
 const retrieveSchema = require('../retrieveSchema');
 
 const showCurrentUser = async (req, res) => {

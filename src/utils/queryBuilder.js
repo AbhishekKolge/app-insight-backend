@@ -144,7 +144,19 @@ class QueryBuilder {
       },
     };
 
-    this.query.orderBy = sortOptions[sortOption] || { createdAt: 'desc' };
+    this.query.orderBy = sortOption
+      ? sortOptions[sortOption]
+      : this.sortKey
+      ? {
+          [this.sortKey]: 'desc',
+        }
+      : { createdAt: 'desc' };
+
+    return this;
+  }
+
+  sortNested(sortOption) {
+    this.query.orderBy = sortOption;
 
     return this;
   }
@@ -212,6 +224,38 @@ class QueryBuilder {
     const totalPages = Math.ceil(totalCount / take);
 
     return { results, totalCount, totalPages };
+  }
+
+  avg(selectFields) {
+    this.query._avg = selectFields.reduce((acc, field) => {
+      acc[field] = true;
+      return acc;
+    }, {});
+
+    return this;
+  }
+
+  count(selectField) {
+    this.query._count = {
+      [selectField]: true,
+    };
+
+    return this;
+  }
+
+  async executeGroupBy(fields) {
+    const { skip, take } = this.pagination;
+
+    const query = {
+      by: fields,
+      ...this.query,
+      skip,
+      take,
+    };
+
+    const result = await this.model.groupBy(query);
+
+    return result;
   }
 }
 

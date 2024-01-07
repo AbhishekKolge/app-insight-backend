@@ -1,10 +1,10 @@
 # Android apps analytics backend
 
-AppInsight web app comes with user-friendly interface, advanced analytics for free.
+It is a frontend for AppInsight web application. It is an app where user can register for free and take advantage of free analytics of applications on google play store.
 
 ## Demo
 
-link: -
+link: https://app-insight.vercel.app
 
 ## API Reference
 
@@ -27,8 +27,6 @@ To run this project, you will need to add the following environment variables to
 `PORT`
 
 `DATABASE_URL`
-
-`REDIS_URL`
 
 `EMAIL_FROM_NAME`
 
@@ -70,7 +68,13 @@ Install dependencies with NPM
   npm install
 ```
 
-Seed data
+Migrate Prisma Schema to connected database
+
+```bash
+  npx prisma migrate dev --name init
+```
+
+Seed data (This command will seed the data from CSV file to connected database)
 
 ```bash
   npm run seed

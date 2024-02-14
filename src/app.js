@@ -12,8 +12,6 @@ const cloudinary = require('cloudinary').v2;
 const corsSetup = require('./middleware/cors');
 const rateLimiterSetup = require('./middleware/rateLimiter');
 
-const { redisClient } = require('./db/connect');
-
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
@@ -58,7 +56,6 @@ const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
-    // await redisClient.connect();
     app.listen(port, () => {
       console.log(`Server is listening on port ${port}...`);
     });

@@ -3,7 +3,6 @@ require('express-async-errors');
 
 const express = require('express');
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const helmet = require('helmet');
 const xss = require('xss-clean');
@@ -33,7 +32,6 @@ app.set('trust proxy', 1);
 app.use(helmet());
 app.use(xss());
 app.use(express.json());
-app.use(cookieParser(process.env.JWT_SECRET));
 app.use(corsSetup);
 app.use(
   fileUpload({

@@ -1,4 +1,4 @@
-const { createJWT, isTokenValid, attachCookiesToResponse } = require('./jwt');
+const { createJWT, isTokenValid, getJWTToken } = require('./jwt');
 const { createTokenUser } = require('./createTokenUser');
 const { nodeMailerConfig } = require('./emailConfig');
 const { sendEmail } = require('./email');
@@ -20,7 +20,7 @@ const { QueryBuilder } = require('./queryBuilder.js');
 module.exports = {
   createJWT,
   isTokenValid,
-  attachCookiesToResponse,
+  getJWTToken,
   createTokenUser,
   nodeMailerConfig,
   sendEmail,

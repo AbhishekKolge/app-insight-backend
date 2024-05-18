@@ -85,19 +85,10 @@ const loginSchema = (req, res, next) => {
   next();
 };
 
-const logoutSchema = (req, res, next) => {
-  const schema = Joi.object().keys({});
-
-  req.schema = schema;
-
-  next();
-};
-
 module.exports = {
   registerSchema,
   verifySchema,
   forgotPasswordSchema,
   resetPasswordSchema,
   loginSchema,
-  logoutSchema,
 };

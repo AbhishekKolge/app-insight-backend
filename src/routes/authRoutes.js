@@ -6,16 +6,13 @@ const {
   forgotPassword,
   resetPassword,
   login,
-  logout,
 } = require('../controllers/authController');
-const { authenticateUserMiddleware } = require('../middleware/authentication');
 const {
   registerSchema,
   verifySchema,
   forgotPasswordSchema,
   resetPasswordSchema,
   loginSchema,
-  logoutSchema,
 } = require('../validation/auth');
 const { validateRequest } = require('../middleware/validate-request');
 
@@ -30,8 +27,5 @@ router
   .route('/reset-password')
   .post([resetPasswordSchema, validateRequest], resetPassword);
 router.route('/login').post([loginSchema, validateRequest], login);
-router
-  .route('/logout')
-  .delete([authenticateUserMiddleware, logoutSchema, validateRequest], logout);
 
 module.exports = router;

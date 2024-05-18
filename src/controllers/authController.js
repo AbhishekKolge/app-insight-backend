@@ -164,25 +164,12 @@ const login = async (req, res) => {
   userModel.checkAuthorized();
   await userModel.comparePassword(password);
   const tokenUser = customUtils.createTokenUser(user);
-  customUtils.attachCookiesToResponse({ res, tokenUser });
+  const token = customUtils.getJWTToken(tokenUser);
 
   res.status(StatusCodes.OK).json({
     name: user.name,
     profileImage: user.profileImage,
-  });
-};
-
-const logout = async (req, res) => {
-  res.cookie('token', 'logout', {
-    httpOnly: true,
-    maxAge: 0,
-    secure: true,
-    signed: true,
-    sameSite: 'none',
-  });
-
-  res.status(StatusCodes.OK).json({
-    msg: 'Logged out successfully',
+    token,
   });
 };
 
@@ -192,5 +179,4 @@ module.exports = {
   forgotPassword,
   resetPassword,
   login,
-  logout,
 };

@@ -153,14 +153,6 @@ const deleteUser = async (req, res) => {
     await cloudinary.uploader.destroy(user.profileImageId);
   }
 
-  res.cookie('token', 'logout', {
-    httpOnly: true,
-    maxAge: 0,
-    secure: true,
-    signed: true,
-    sameSite: 'none',
-  });
-
   res.status(StatusCodes.OK).json({
     msg: 'Account deleted successfully',
   });
